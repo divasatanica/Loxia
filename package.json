@@ -1,0 +1,80 @@
+{
+  "name": "loxia",
+  "version": "0.1.0",
+  "description": "Markdown editor based on react and electron",
+  "private": true,
+  "main": "./public/electron.js",
+  "homepage": ".",
+  "author": {
+    "name": "coma",
+    "email": "coma.desperado@gmail.com",
+    "url": "https://comacc.top"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/divasatanica/Loxia.git"
+  },
+  "dependencies": {
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.4",
+    "@types/react": "16.8.13",
+    "@types/react-dom": "16.8.4",
+    "antd": "^3.16.2",
+    "axios": "^0.18.0",
+    "babel-plugin-import": "^1.11.0",
+    "electron-is": "^3.0.0",
+    "nedb": "^1.8.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
+    "react-router": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
+    "customize-cra": "^0.2.12",
+    "electron": "^3.0.13",
+    "electron-builder": "^20.38.4",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "react-app-rewired": "^2.1.1",
+    "typescript": "3.4.3",
+    "wait-on": "^3.2.0"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "electron-start": "cross-env NODE_ENV=development electron .",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && cross-env NODE_ENV=development electron . \"",
+    "pack": "electron-builder --dir",
+    "dist": "rm -rf ./dist && electron-builder"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "build": {
+    "appId": "Loxia",
+    "files": [
+      "package.json",
+      "node_modules/**/*",
+      "build/**/*"
+    ],
+    "mac": {
+      "category": "text",
+      "target": [
+        "dmg"
+      ]
+    }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
