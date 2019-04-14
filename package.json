@@ -71,7 +71,8 @@
       "category": "text",
       "target": [
         "dmg"
-      ]
+      ],
+      "icon": "./asset/loxia.png"
     }
   },
   "browserslist": [

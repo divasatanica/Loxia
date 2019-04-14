@@ -141,7 +141,8 @@ function createWindow () {
     width: 1024,
     height: 750,
     minWidth: 950,
-    minHeight: 700
+    minHeight: 700,
+    titleBarStyle: 'hidden'
   });
 
   // 开发环境使用 http 协议 生产环境使用 file 协议
