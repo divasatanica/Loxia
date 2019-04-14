@@ -138,8 +138,8 @@ ipcMain.on('show', () => {
 function createWindow () {
   // 创建浏览器窗口,宽高自定义具体大小你开心就好
   mainWindow = new BrowserWindow({
-    width: 980,
-    height: 850,
+    width: 1024,
+    height: 750,
     minWidth: 950,
     minHeight: 700
   });
