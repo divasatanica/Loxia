@@ -1,28 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import { Rate } from 'antd';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Layout } from 'antd';
+import { view as MenuList } from './components/SideMenu/';
+import { view as DragBar } from './components/DragBar/';
+import { view as Editor } from './pages/Editor/';
 import './App.css';
+
+const { Sider, Content } = Layout;
 
 class App extends Component {
   render() {
+    const menuItems = [
+      {
+        iconType: "user",
+        routePath: "/",
+        text: "Editor",
+        key: "Editor"
+      },
+      {
+        iconType: "user",
+        routePath: "/test",
+        text: "test",
+        key: "test"
+      },
+      {
+        iconType: "user",
+        routePath: "/test2",
+        text: "test2",
+        key: "test2"
+      }
+    ]
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <Rate defaultValue={3}></Rate>
-        </header>
-      </div>
+      <Router>
+        <Layout>
+          <div className="App">
+            <Sider collapsible>
+              <DragBar height={30}></DragBar>
+              <MenuList menuItems={menuItems}></MenuList>
+            </Sider>
+          </div>
+          <Layout>
+            <Content>
+              <Route path="/" component={Editor}></Route>
+            </Content>
+          </Layout>
+        </Layout>
+        
+      </Router>
     );
   }
 }
