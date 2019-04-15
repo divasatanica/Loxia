@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 import { view as MenuList } from './components/SideMenu/';
 import { view as DragBar } from './components/DragBar/';
 import { view as Editor } from './pages/Editor/';
 import './App.css';
+
+const AboutPage = React.lazy(() => import('./pages/About'));
 
 const { Sider, Content } = Layout;
 
@@ -19,9 +21,9 @@ class App extends Component {
       },
       {
         iconType: "user",
-        routePath: "/test",
-        text: "test",
-        key: "test"
+        routePath: "/about",
+        text: "about",
+        key: "about"
       },
       {
         iconType: "user",
@@ -42,7 +44,10 @@ class App extends Component {
           </div>
           <Layout>
             <Content>
-              <Route path="/" component={Editor}></Route>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Route exact path="/" component={Editor}></Route>
+                <Route path="/about" component={AboutPage}></Route>
+              </Suspense>
             </Content>
           </Layout>
         </Layout>
