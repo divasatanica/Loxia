@@ -1,0 +1,1 @@
+export const SET_RAW_CONTENT: string = 'RAWINPUT/SET_RAW';

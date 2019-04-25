@@ -8,7 +8,7 @@ const MarkDown =  ({ raw }: { raw: string}) => {
 
 const mapStateToProps = (state: any) => {
     return {
-        raw: state.rawContent
+        raw: state.editor.content
     };
 };
 
