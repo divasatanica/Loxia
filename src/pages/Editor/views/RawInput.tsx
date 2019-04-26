@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ContentEditable from 'react-simple-contenteditable';
 
 import { setRawInput } from '../actions';
 import { debounce } from '../../../utils/func.opt';
@@ -8,38 +9,33 @@ import './RawInput.less';
 
 interface IProps {
     handleChange(value: string): void;
+    rawContent: string;
 }
 
 class RawInput extends Component<IProps, {}> {
-    input!: any;
 
-    constructor (props: IProps) {
-        super(props);
-    }
-
-    emitChange = debounce(() => {
-        this.handleChange();
+    // use debounce function to slow handleChange's invoking down
+    emitChange = debounce((ev: any, value: string) => {
+        this.handleChange(ev, value);
     }, 300);
 
-    handleChange () {
-        const input = this.input;
-        if (input) {
-            this.props.handleChange(input.innerText);
-        }
-    }
-
-    refInput (node: any) {
-        this.input = node;
+    handleChange (ev: any, value: string) {
+        this.props.handleChange(value);
     }
 
     render () {
-        return <div contentEditable className="Editor-raw-input-container" ref={this.refInput.bind(this)} onInput={this.emitChange}>
-
-        </div>
+        return <ContentEditable 
+                html={this.props.rawContent}
+                className="Editor-raw-input-container"
+                tagName="div"
+                onChange={this.emitChange}
+                onKeyPress={() => {}}
+                onPaste={() => {}}
+                contentEditable="plaintext-only"></ContentEditable>
     }
 }
 
-const mapDispatchToProps = (dispatch: Function, ownProps: any) => {
+const mapDispatchToProps = (dispatch: Function) => {
     return {
         handleChange: (value: string) => {
             dispatch(setRawInput(value));
@@ -47,8 +43,10 @@ const mapDispatchToProps = (dispatch: Function, ownProps: any) => {
     };
 };
 
-const mapStateToProps = (state: any, ownProps: any) => {
-    return {};
+const mapStateToProps = (state: any) => {
+    return {
+        rawContent: state.editor.content
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RawInput);
