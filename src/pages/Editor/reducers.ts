@@ -5,7 +5,8 @@ export default (state: any, action: any) => {
         case SET_RAW_CONTENT: {
             return {
                 ...state,
-                content: action.rawContent
+                content: action.rawContent,
+                displayContent: action.displayContent
             }
         };
         default: {
