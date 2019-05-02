@@ -14,30 +14,47 @@ interface IProps {
 
 class RawInput extends Component<IProps, {}> {
 
+    // use a processor object to process HTML string, avoid creating object for multi times.
+    HTMLProcessor: HTMLDivElement | null = document.createElement('div');
+
     // use debounce function to slow handleChange's invoking down
     emitChange = debounce((ev: any, value: string) => {
         this.handleChange(value);
     }, 300);
 
+    componentDidMount () {
+        document.execCommand("defaultParagraphSeparator", false, "\n");
+    }
+
     handleChange (value: string) {
 
-        // the innerHTML is to display on the left, and it is processed to input to right-side component.
-        let processedValue = value.replace(/<div><br><\/div>/g, '\n').replace(/<div>(.+?)<\/div>/g, '$1\n');
-        this.props.handleChange({
-            content: processedValue,
-            displayContent: value
-        });
+        // use a div's innerText to delete those html tag generated contentEditable div.
+        const divElement = this.HTMLProcessor;
+
+        if (divElement) {
+            divElement.innerHTML = value;
+
+            let processedValue = divElement.innerText;
+            this.props.handleChange({
+                content: processedValue,
+                displayContent: value
+            });
+        }
     }
 
     render () {
         return <ContentEditable 
                 html={this.props.displayContent}
                 className="Editor-raw-input-container"
-                tagName="div"
+                tagName="pre"
                 onChange={this.emitChange}
-                onKeyPress={() => {}}
-                onPaste={() => {}}
+                onKeyPress={this.emitChange}
+                onPaste={this.emitChange}
                 contentEditable="true"></ContentEditable>
+    }
+
+    componentWillUnmount () {
+        this.HTMLProcessor = null;
     }
 }
 
